@@ -51,7 +51,8 @@ void ls(const char* path) {
     exit(1);
   }
 
-  printf("\n%s:\n", path);
+  // Print the directory's name
+  printf("\n\e[1;36m%s:\e[0m\n", path);
 
   // Traverse the directory
   while ((dir_entry = readdir(dir)) != NULL) {
@@ -87,7 +88,13 @@ Error code: %d\n", file_name, errno);
     }
 
     display_file_details(&stats);
-    printf("%s\n", dir_entry->d_name);
+
+    if (S_ISDIR(stats.st_mode))
+      printf("\e[34m%s\e[0m\n", dir_entry->d_name);
+    else if (S_ISLNK(stats.st_mode))
+      printf("\e[36m%s\e[0m\n", dir_entry->d_name);
+    else
+      printf("\e[32m%s\e[0m\n", dir_entry->d_name);
   }
 
   // List all directories recursively
@@ -124,7 +131,15 @@ void display_file_details(struct stat* stats) {
 	}
 
   // File size
-	printf("%6ld ", (long)stats->st_size);
+  if (stats->st_size < 1024) {
+    printf("%4ldB ", (long)stats->st_size);
+  } else if (stats->st_size < 1024 * 1024) {
+    printf("%4ldK ", (long)stats->st_size / 1024);
+  } else if (stats->st_size < 1024 * 1024 * 1024) {
+    printf("%4ldM ", (long)stats->st_size / 1024 / 1024);
+  } else {
+    printf("%4ldG ", (long)stats->st_size / 1024 / 1024 / 1024);
+  }
 
   // Modified time
 	printf("%.12s ", ctime(&stats->st_mtime) + 4);
