@@ -1,19 +1,24 @@
 
-LIB = lib/log.c lib/log.h lib/sem.c lib/sem.h
-OBJ = obj/log.o obj/sem.o
+LIB = lib/log.c lib/log.h lib/sem.c lib/sem.h lib/buffer.c lib/buffer.h
+OBJ = obj/log.o obj/sem.o obj/buffer.o
 CFLAGS = -I. -lpthread
+
+all: lab1 lab2 lab3
+	@echo all set.
 
 lab1: lib src/lab1.c
 	@gcc $(CFLAGS) src/lab1.c $(OBJ) -o bin/lab1
-	@bin/lab1
 
 lab2: lib src/lab2.c
 	@gcc $(CFLAGS) src/lab2.c $(OBJ) -o bin/lab2
-	@bin/lab2
+
+lab3: lib src/lab3.c
+	@gcc $(CFLAGS) src/lab3.c $(OBJ) -o bin/lab3
 
 lib: $(LIB)
 	@gcc $(CFLAGS) -c lib/log.c -o obj/log.o
 	@gcc $(CFLAGS) -c lib/sem.c -o obj/sem.o
+	@gcc $(CFLAGS) -c lib/buffer.c -o obj/buffer.o
 
 clean:
 	rm -f *~
