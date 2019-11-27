@@ -6,7 +6,7 @@ LIB = lib/log.c lib/log.h \
 OBJ = obj/log.o obj/sem.o obj/buffer.o obj/ds.o
 CFLAGS = -I. -lpthread
 
-all: lab1 lab2 lab3
+all: lab1 lab2 lab3 lab4
 	@echo all set.
 
 lab1: lib src/lab1.c

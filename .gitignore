@@ -1,2 +1,7 @@
 *.o
 *~
+.vscode
+bin/lab1
+bin/lab2
+bin/lab3
+bin/lab4
