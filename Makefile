@@ -7,7 +7,7 @@ OBJ = obj/log.o obj/sem.o obj/buffer.o obj/ds.o
 CFLAGS = -I. -lpthread
 
 all: lab1 lab2 lab3 lab4
-	@echo all set.
+	@echo [*] all set.
 
 lab1: lib src/lab1.c
 	@gcc $(CFLAGS) src/lab1.c $(OBJ) -o bin/lab1
@@ -21,11 +21,14 @@ lab3: lib src/lab3.c
 lab4: lib src/lab4.c
 	@gcc $(CFLAGS) src/lab4.c $(OBJ) -o bin/lab4
 
-lib: $(LIB)
+lib: update_lib
 	@gcc $(CFLAGS) -c lib/log.c -o obj/log.o
 	@gcc $(CFLAGS) -c lib/sem.c -o obj/sem.o
 	@gcc $(CFLAGS) -c lib/buffer.c -o obj/buffer.o
 	@gcc $(CFLAGS) -c lib/ds.c -o obj/ds.o
+
+update_lib:
+	@echo [+] Updating libraries...
 
 clean:
 	rm -f *~
